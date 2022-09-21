@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .klasa {
+            color: red
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main"></div>
+    <script type="text/babel">
+
+        class FoodList extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    tab: []
+                };
+                this.clickMe = this.clickMe.bind(this);
+            }
+            clickMe(price) {
+                this.state.tab.push(this.getFood(price))
+                this.setState({ tab: this.state.tab })
+                // console.log("this.state.clicks + 1: ", this.state.clicks + 1);
+            }
+            getFood = (price) => {
+                return price === "tanie" ? "hamburger" : "trufle"
+            }
+            render() {
+                //console.log("tablica: ", this.state.tab.map((string) => { return <Food food={string} /> }));
+                return (
+                    <div>
+                        <Food />
+                    </div>
+                );
+            }
+        }
+
+        class Food extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    w: 100,
+                    h: 100,
+                    c: "#333333"
+                };
+                this.clickMe = this.clickMe.bind(this);
+            }
+            clickMe() {
+                this.setState({
+                    w: Math.floor(Math.random() * 150),
+                    h: Math.floor(Math.random() * 150),
+                    c: "#" + Math.floor(Math.random() * Math.pow(256, 3)).toString(16)
+                })
+                console.log("this.state: ", this.state);
+            }
+            render() {
+                return (
+                    <div style={{ width: this.state.w, height: this.state.h, backgroundColor: this.state.c }}>
+                        <button onClick={this.clickMe}>losuj</button>
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(
+            <FoodList />,
+            document.getElementById('main')
+        );
+    </script>
+</body>
+
+</html>

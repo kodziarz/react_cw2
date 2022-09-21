@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .klasa {
+            color: red
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main"></div>
+    <script type="text/babel">
+
+        class FoodList extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    tab: ["masło", "mleko", "chleb", "dżem"],
+                    currentFood: "masło"
+                };
+                this.clickMe = this.clickMe.bind(this);
+            }
+            clickMe() {
+                this.setState({ currentFood: this.getRandomFood() })
+                // console.log("this.state.clicks + 1: ", this.state.clicks + 1);
+            }
+            getRandomFood = () => {
+                let index = Math.floor(Math.random() * this.state.tab.length)
+                return this.state.tab[index]
+            }
+            render() {
+                return (
+                    <div>
+                        <button onClick={this.clickMe}> zmień jedzenie </button>
+                        <Food food={this.state.currentFood} />
+                        <Food food={this.state.currentFood} />
+                        <Food food={this.state.currentFood} />
+                    </div>
+                );
+            }
+        }
+
+        class Food extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = { doLike: true };
+                this.clickMe = this.clickMe.bind(this);
+            }
+            clickMe() {
+                this.setState({ doLike: !this.state.doLike })
+                // console.log("this.state.clicks + 1: ", this.state.clicks + 1);
+            }
+            render() {
+                return (
+                    <div>
+                        <h2>{this.state.doLike ? "lubię" : "nie lubię"}</h2>
+                        <h2>{this.props.food}</h2>
+                        <button onClick={this.clickMe}>Lubię/nie lubię</button>
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(
+            <FoodList />,
+            document.getElementById('main')
+        );
+    </script>
+</body>
+
+</html>

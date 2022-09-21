@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .klasa {
+            color: red
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main"></div>
+    <script type="text/babel">
+
+        class Square extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = { a: 1, b: 2, c: 3 };
+                this.clickMe = this.clickMe.bind(this);
+            }
+            clickMe() {
+                console.log(this);
+            }
+            render() {
+                return (
+                    <div>
+                        <h2>a = {this.state.a} </h2>
+                        <h2>b = {this.state.b} </h2>
+                        <h2>c = {this.state.c} </h2>
+                        <button onClick={this.clickMe}>click me</button>
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(
+            <Square />,
+            document.getElementById('main')
+        );
+    </script>
+</body>
+
+</html>

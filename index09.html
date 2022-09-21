@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .klasa {
+            color: red
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main"></div>
+    <script type="text/babel">
+
+        class ZonesList extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    data: []
+                };
+                // this.clickMe = this.clickMe.bind(this);
+            }
+            componentDidMount = async () => {
+                let object = await fetch("/json")
+                object = await object.json()
+                this.setState({ data: object })
+                console.log("data:", object);
+            }
+            // clickMe(price) {
+            //     this.state.tab.push(this.getFood(price))
+            //     this.setState({ tab: this.state.tab })
+            //     // console.log("this.state.clicks + 1: ", this.state.clicks + 1);
+            // }
+            getFood = (price) => {
+                return price === "tanie" ? "hamburger" : "trufle"
+            }
+            render() {
+                //console.log("tablica: ", this.state.tab.map((string) => { return <Food food={string} /> }));
+                return (
+                    <div>
+                        {this.state.data.map((e) => { return <Zone /> })}
+                    </div>
+                );
+            }
+        }
+
+        class Zone extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    time: 10,
+                    interval: null
+                };
+                this.clickMe = this.clickMe.bind(this);
+            }
+            clickMe() {
+                if (this.state.interval == null) {
+                    this.state.interval = setInterval(() => { this.setState({ time: this.state.time - 1 }) }, 1000)
+                } else {
+                    clearInterval(this.state.interval)
+                    this.state.interval = null
+                }
+                console.log("this.state: ", this.state);
+            }
+            render() {
+                return (
+                    <div style={{ width: 100, height: 100, borderRadius: 50, backgroundColor: "blue" }}>
+                        <h1>{this.state.time}</h1>
+                        <button onClick={this.clickMe}>klik</button>
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(
+            <ZonesList />,
+            document.getElementById('main')
+        );
+    </script>
+</body>
+
+</html>
